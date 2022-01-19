@@ -1,10 +1,11 @@
+/* eslint import/no-nodejs-modules:0 */
 /* global process */
 
 import html from '@rollup/plugin-html';
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
-import babel from 'rollup-plugin-babel';
+import { babel } from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import template from './src/html-template.js';
 
@@ -29,7 +30,10 @@ const plugins = [
     include: 'node_modules/**',
     sourceMap: false,
   }),
-  babel(babelconfig),
+  babel({
+    "babelHelpers": "bundled",
+    ...babelconfig,
+  }),
 ];
 
 if (process.env.NODE_ENV === 'production') {
